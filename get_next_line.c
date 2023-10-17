@@ -6,7 +6,7 @@
 /*   By: koimai <koimai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:15:16 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/17 12:21:20 by koimai           ###   ########.fr       */
+/*   Updated: 2023/10/17 19:59:55 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*reset_line(char *line)
 		return (NULL);
 	}
 	len_to_newline = 0;
-	while ((line[len_to_newline] != '\n' && line[len_to_newline] != '\0') || (line[BUFFER_SIZE - 1] == '\n' && len_to_newline <= BUFFER_SIZE))
+	while (line[len_to_newline] != '\n' && line[len_to_newline] != '\0')
 		len_to_newline++;
 	if (len - len_to_newline != 1 || line[BUFFER_SIZE - 1] == '\n')
 		len_to_newline++;
@@ -111,7 +111,9 @@ char	*modified_line(char *line)
 	if (!ft_strlen(line))
 		return (NULL);
 	len = 0;
-	while ((line[len] != '\n' || line[BUFFER_SIZE - 1] == '\n') && len <= BUFFER_SIZE)
+	while (line[len] != '\n' && line[len] == '\0')
+		len++;
+	if (line[len] == '\n')
 		len++;
 	str = (char *)malloc((len + 1) * sizeof(char));
 	if (!str)
@@ -124,9 +126,10 @@ char	*modified_line(char *line)
 	}
 	if (line[i] == '\n')
 	{
-		str[i] = '\0';
+		str[i] = '\n';
 		i++;
 	}
+	str[i] = '\0';
 	return (str);
 }
 
@@ -147,12 +150,15 @@ char	*get_next_line(int fd)
 	if (byte_num == -1)
 		return (NULL);
 	line[byte_num] = '\0';
-	while (ft_strchr(line) && ft_strchr(line))
+	while (ft_strchr(line))
 	{
 		result = ft_strjoin_clear(result, line);
 		byte_num = read(fd, line, BUFFER_SIZE);
 		if (byte_num == -1)
+		{
+			free(line);
 			return (NULL);
+		}
 		line[byte_num] = '\0';
 	}
 	result = ft_strjoin_clear(result, modified_line(line));
@@ -175,10 +181,10 @@ int	main(void)
 	while (result != NULL)
 	{
 		i++;
-		printf("%d->%s\n", i, result);
+		printf("%s", result);
 		result = get_next_line(fd);
 	}
-	printf("finish\n");
+	// printf("finish\n");
 	free(result);
 	return (0);
 }
