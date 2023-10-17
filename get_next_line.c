@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: koimai <koimai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: koimai <koimai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:15:16 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/14 21:43:01 by koimai           ###   ########.fr       */
+/*   Updated: 2023/10/17 12:21:20 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	*ft_strjoin_clear(char *s1, char *s2)
 	size_t	i;
 	size_t	j;
 
+	if (!s1 && !s2)
+		return (NULL);
 	result = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!result)
 		return (NULL);
@@ -67,7 +69,6 @@ char	*ft_strjoin_clear(char *s1, char *s2)
 }
 
 
-
 char	*reset_line(char *line)
 {
 	size_t	len;
@@ -76,10 +77,15 @@ char	*reset_line(char *line)
 	char	*str;
 
 	len = ft_strlen(line);
+	if (len == 0)
+	{
+		free(line);
+		return (NULL);
+	}
 	len_to_newline = 0;
-	while (line[len_to_newline] != '\n' && line[len_to_newline] != '\0')
+	while ((line[len_to_newline] != '\n' && line[len_to_newline] != '\0') || (line[BUFFER_SIZE - 1] == '\n' && len_to_newline <= BUFFER_SIZE))
 		len_to_newline++;
-	if (len - len_to_newline != 1)
+	if (len - len_to_newline != 1 || line[BUFFER_SIZE - 1] == '\n')
 		len_to_newline++;
 	str = (char *)malloc((len - len_to_newline + 1) * sizeof(char));
 	if (!str)
@@ -92,6 +98,7 @@ char	*reset_line(char *line)
 		i++;
 	}
 	str[i] = '\0';
+	free(line);
 	return (str);
 }
 
@@ -104,13 +111,13 @@ char	*modified_line(char *line)
 	if (!ft_strlen(line))
 		return (NULL);
 	len = 0;
-	while (line[len] != '\n')
+	while ((line[len] != '\n' || line[BUFFER_SIZE - 1] == '\n') && len <= BUFFER_SIZE)
 		len++;
 	str = (char *)malloc((len + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	i = 0;
-	while (line[i] != '\0' && line[i] != '\n')
+	while ((line[i] != '\0' && line[i] != '\n'))
 	{
 		str[i] = line[i];
 		i++;
@@ -120,7 +127,6 @@ char	*modified_line(char *line)
 		str[i] = '\0';
 		i++;
 	}
-	free(line);
 	return (str);
 }
 
@@ -164,6 +170,7 @@ int	main(void)
 
 	fd = open("test.txt", O_RDONLY);
 	i = 0;
+	result = "(null)";
 	result = get_next_line(fd);
 	while (result != NULL)
 	{
@@ -171,6 +178,7 @@ int	main(void)
 		printf("%d->%s\n", i, result);
 		result = get_next_line(fd);
 	}
-	printf("finish");
+	printf("finish\n");
+	free(result);
 	return (0);
 }
