@@ -6,7 +6,7 @@
 /*   By: koimai <koimai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 23:16:50 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/18 15:26:37 by koimai           ###   ########.fr       */
+/*   Updated: 2023/10/18 15:43:56 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static char	*ft_initialize_target(char *target)
 
 size_t	ft_strlen(char *str)
 {
-	size_t	i;
+	size_t	len;
 
-	i = 0;
+	len = 0;
 	if (!str)
 		return (0);
-	while (str[i] != '\0')
-		i++;
-	return (i);
+	while (str[len] != '\0')
+		len++;
+	return (len);
 }
 
 char	*ft_strchr(char *str, int c)
