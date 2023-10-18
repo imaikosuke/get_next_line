@@ -6,7 +6,7 @@
 /*   By: koimai <koimai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 20:28:11 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/18 15:23:53 by koimai           ###   ########.fr       */
+/*   Updated: 2023/10/18 15:38:10 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,25 @@ char	*ft_modify_line(char *buffer)
 
 char	*ft_read_to_line(int fd, char *line)
 {
-	char	*buff;
+	char	*buffer;
 	int		byte_size;
 
-	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buff)
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
 		return (NULL);
 	byte_size = 1;
 	while (!ft_strchr(line, '\n') && byte_size != 0)
 	{
-		byte_size = read(fd, buff, BUFFER_SIZE);
+		byte_size = read(fd, buffer, BUFFER_SIZE);
 		if (byte_size == -1)
 		{
-			free(buff);
+			free(buffer);
 			return (NULL);
 		}
-		buff[byte_size] = '\0';
-		line = ft_strjoin(line, buff);
+		buffer[byte_size] = '\0';
+		line = ft_strjoin(line, buffer);
 	}
-	free(buff);
+	free(buffer);
 	return (line);
 }
 
