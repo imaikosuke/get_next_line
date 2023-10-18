@@ -6,7 +6,7 @@
 /*   By: koimai <koimai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 20:28:11 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/18 15:38:10 by koimai           ###   ########.fr       */
+/*   Updated: 2023/10/18 18:15:37 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_read_to_line(int fd, char *line)
 	char	*buffer;
 	int		byte_size;
 
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
 	byte_size = 1;
@@ -70,7 +70,7 @@ char	*get_next_line(int fd)
 	static char	*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
+		return (NULL);
 	line = ft_read_to_line(fd, line);
 	if (!line)
 		return (NULL);
@@ -83,21 +83,31 @@ char	*get_next_line(int fd)
 // #include <fcntl.h>
 // int	main(void)
 // {
-// 	int		fd;
-// 	char	*result;
+// 	char	*line;
 // 	int		i;
+// 	int		fd1;
+// 	int		fd2;
+// 	int		fd3;
 
-// 	fd = open("test.txt", O_RDONLY);
-// 	i = 0;
-// 	result = "(null)";
-// 	result = get_next_line(fd);
-// 	while (result != NULL)
+// 	fd1 = open("tests/test.txt", O_RDONLY);
+// 	fd2 = open("tests/test2.txt", O_RDONLY);
+// 	fd3 = open("tests/test3.txt", O_RDONLY);
+// 	i = 1;
+// 	while (i < 7)
 // 	{
+// 		line = get_next_line(fd1);
+// 		printf("line [%02d]: %s", i, line);
+// 		free(line);
+// 		line = get_next_line(fd2);
+// 		printf("line [%02d]: %s", i, line);
+// 		free(line);
+// 		line = get_next_line(fd3);
+// 		printf("line [%02d]: %s", i, line);
+// 		free(line);
 // 		i++;
-// 		printf("%s", result);
-// 		result = get_next_line(fd);
 // 	}
-// 	// printf("finish\n");
-// 	free(result);
+// 	close(fd1);
+// 	close(fd2);
+// 	close(fd3);
 // 	return (0);
 // }

@@ -6,7 +6,7 @@
 /*   By: koimai <koimai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 20:38:45 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/18 15:26:54 by koimai           ###   ########.fr       */
+/*   Updated: 2023/10/18 17:59:54 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,10 @@ char	*ft_save_after_linebreak(char *line)
 	}
 	str = (char *)malloc((ft_strlen(line) - i + 1) * sizeof(char));
 	if (!str)
+	{
+		free(line);
 		return (NULL);
+	}
 	i++;
 	j = 0;
 	while (line[i] != '\0')

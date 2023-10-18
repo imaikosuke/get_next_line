@@ -6,7 +6,7 @@
 /*   By: koimai <koimai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 23:15:23 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/18 15:37:04 by koimai           ###   ########.fr       */
+/*   Updated: 2023/10/18 18:15:46 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*get_next_line(int fd)
 	static char	*line[1024];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
+		return (NULL);
 	line[fd] = ft_read_to_line(fd, line[fd]);
 	if (!line[fd])
 		return (NULL);
@@ -78,3 +78,36 @@ char	*get_next_line(int fd)
 	line[fd] = ft_save_after_linebreak(line[fd]);
 	return (result);
 }
+
+// #include <stdio.h>
+// #include <fcntl.h>
+// int	main(void)
+// {
+// 	char	*line;
+// 	int		i;
+// 	int		fd1;
+// 	int		fd2;
+// 	int		fd3;
+
+// 	fd1 = open("test1.txt", O_RDONLY);
+// 	fd2 = open("test2.txt", O_RDONLY);
+// 	fd3 = open("test3.txt", O_RDONLY);
+// 	i = 1;
+// 	while (i < 7)
+// 	{
+// 		line = get_next_line(fd1);
+// 		printf("file1: %s", line);
+// 		free(line);
+// 		line = get_next_line(fd2);
+// 		printf("file2: %s", line);
+// 		free(line);
+// 		line = get_next_line(fd3);
+// 		printf("file3: %s", line);
+// 		free(line);
+// 		i++;
+// 	}
+// 	close(fd1);
+// 	close(fd2);
+// 	close(fd3);
+// 	return (0);
+// }
