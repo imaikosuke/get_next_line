@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: koimai <koimai@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: koimai <koimai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 23:16:50 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/18 00:33:59 by koimai           ###   ########.fr       */
+/*   Updated: 2023/10/18 14:26:03 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,8 @@ char	*ft_save_after_linebreak(char *line)
 		return (NULL);
 	i++;
 	j = 0;
-	while (line[i])
-	{
-		str[j] = line[i];
-		i++;
-		j++;
-	}
+	while (line[i] != '\0')
+		str[j++] = line[i++];
 	str[j] = '\0';
 	free(line);
 	return (str);
