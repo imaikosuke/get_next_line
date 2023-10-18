@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: koimai <koimai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 20:28:11 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/18 00:27:26 by koimai           ###   ########.fr       */
+/*   Created: 2023/10/17 23:15:23 by koimai            #+#    #+#             */
+/*   Updated: 2023/10/18 11:32:44 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_read_to_line(int fd, char *line)
 {
@@ -39,37 +39,14 @@ char	*ft_read_to_line(int fd, char *line)
 char	*get_next_line(int fd)
 {
 	char		*result;
-	static char	*line;
+	static char	*line[1024];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	line = ft_read_to_line(fd, line);
-	if (!line)
+	line[fd] = ft_read_to_line(fd, line[fd]);
+	if (!line[fd])
 		return (NULL);
-	result = ft_modify_line(line);
-	line = ft_save_after_linebreak(line);
+	result = ft_modify_line(line[fd]);
+	line[fd] = ft_save_after_linebreak(line[fd]);
 	return (result);
 }
-
-// #include <stdio.h>
-// #include <fcntl.h>
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*result;
-// 	int		i;
-
-// 	fd = open("test.txt", O_RDONLY);
-// 	i = 0;
-// 	result = "(null)";
-// 	result = get_next_line(fd);
-// 	while (result != NULL)
-// 	{
-// 		i++;
-// 		printf("%d->%s", i, result);
-// 		result = get_next_line(fd);
-// 	}
-// 	// printf("finish\n");
-// 	free(result);
-// 	return (0);
-// }

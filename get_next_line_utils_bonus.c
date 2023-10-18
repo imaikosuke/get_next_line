@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: koimai <koimai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 20:38:45 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/18 00:27:11 by koimai           ###   ########.fr       */
+/*   Created: 2023/10/17 23:16:50 by koimai            #+#    #+#             */
+/*   Updated: 2023/10/18 00:33:59 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(char *str)
 {
-	size_t	len;
+	size_t	i;
 
-	len = 0;
+	i = 0;
 	if (!str)
 		return (0);
-	while (str[len] != '\0')
-		len++;
-	return (len);
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
 
 char	*ft_strchr(char *str, int c)
