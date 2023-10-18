@@ -6,11 +6,20 @@
 /*   By: koimai <koimai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 20:38:45 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/18 14:26:25 by koimai           ###   ########.fr       */
+/*   Updated: 2023/10/18 15:26:54 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static char	*ft_initialize_target(char *target)
+{
+	target = (char *)malloc(1 * sizeof(char));
+	if (!target)
+		return (NULL);
+	target[0] = '\0';
+	return (target);
+}
 
 size_t	ft_strlen(char *str)
 {
@@ -50,51 +59,24 @@ char	*ft_strjoin(char *target, char *buffer)
 
 	if (!target)
 	{
-		target = (char *)malloc(1 * sizeof(char));
-		target[0] = '\0';
+		target = ft_initialize_target(target);
+		if (!target)
+			return (NULL);
 	}
 	if (!target || !buffer)
 		return (NULL);
-	str = malloc(sizeof(char) * ((ft_strlen(target) + ft_strlen(buffer)) + 1));
-	if (str == NULL)
+	str = malloc(((ft_strlen(target) + ft_strlen(buffer)) + 1) * sizeof(char));
+	if (!str)
 		return (NULL);
 	i = -1;
-	j = 0;
 	if (target)
 		while (target[++i] != '\0')
 			str[i] = target[i];
+	j = 0;
 	while (buffer[j] != '\0')
 		str[i++] = buffer[j++];
 	str[ft_strlen(target) + ft_strlen(buffer)] = '\0';
 	free(target);
-	return (str);
-}
-
-char	*ft_modify_line(char *buffer)
-{
-	size_t	i;
-	char	*str;
-
-	i = 0;
-	if (!buffer[i])
-		return (NULL);
-	while (buffer[i] && buffer[i] != '\n')
-		i++;
-	str = (char *)malloc((i + 1 + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
-	{
-		str[i] = buffer[i];
-		i++;
-	}
-	if (buffer[i] == '\n')
-	{
-		str[i] = buffer[i];
-		i++;
-	}
-	str[i] = '\0';
 	return (str);
 }
 

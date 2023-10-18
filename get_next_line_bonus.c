@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: koimai <koimai@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: koimai <koimai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 23:15:23 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/18 11:32:44 by koimai           ###   ########.fr       */
+/*   Updated: 2023/10/18 15:23:04 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+char	*ft_modify_line(char *buffer)
+{
+	size_t	i;
+	char	*str;
+
+	i = 0;
+	if (!buffer[i])
+		return (NULL);
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	str = (char *)malloc((i + 1 + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+	{
+		str[i] = buffer[i];
+		i++;
+	}
+	if (buffer[i] == '\n')
+	{
+		str[i] = buffer[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
 
 char	*ft_read_to_line(int fd, char *line)
 {
