@@ -6,7 +6,7 @@
 /*   By: koimai <koimai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 20:38:45 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/18 17:59:54 by koimai           ###   ########.fr       */
+/*   Updated: 2023/10/21 17:54:02 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*ft_initialize_target(char *target)
 	return (target);
 }
 
-size_t	ft_strlen(char *str)
+size_t	ft_len(char *str)
 {
 	size_t	len;
 
@@ -41,7 +41,7 @@ char	*ft_strchr(char *str, int c)
 	if (!str)
 		return (0);
 	if (c == '\0')
-		return ((char *)&str[ft_strlen(str)]);
+		return ((char *)&str[ft_len(str)]);
 	while (str[i] != '\0')
 	{
 		if (str[i] == (char)c)
@@ -51,31 +51,30 @@ char	*ft_strchr(char *str, int c)
 	return (0);
 }
 
-char	*ft_strjoin(char *target, char *buffer)
+char	*ft_strjoin(char *target, char *buf)
 {
 	size_t	i;
 	size_t	j;
 	char	*str;
 
 	if (!target)
-	{
 		target = ft_initialize_target(target);
-		if (!target)
-			return (NULL);
-	}
-	if (!target || !buffer)
+	if (!target)
 		return (NULL);
-	str = malloc(((ft_strlen(target) + ft_strlen(buffer)) + 1) * sizeof(char));
+	str = (char *)malloc(((ft_len(target) + ft_len(buf)) + 1) * sizeof(char));
 	if (!str)
+	{
+		free(target);
 		return (NULL);
+	}
 	i = -1;
 	if (target)
 		while (target[++i] != '\0')
 			str[i] = target[i];
 	j = 0;
-	while (buffer[j] != '\0')
-		str[i++] = buffer[j++];
-	str[ft_strlen(target) + ft_strlen(buffer)] = '\0';
+	while (buf[j] != '\0')
+		str[i++] = buf[j++];
+	str[ft_len(target) + ft_len(buf)] = '\0';
 	free(target);
 	return (str);
 }
@@ -94,7 +93,7 @@ char	*ft_save_after_linebreak(char *line)
 		free(line);
 		return (NULL);
 	}
-	str = (char *)malloc((ft_strlen(line) - i + 1) * sizeof(char));
+	str = (char *)malloc((ft_len(line) - i + 1) * sizeof(char));
 	if (!str)
 	{
 		free(line);
