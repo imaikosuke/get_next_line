@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: koimai <koimai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: koimai <koimai@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 23:16:50 by koimai            #+#    #+#             */
-/*   Updated: 2023/10/18 18:00:40 by koimai           ###   ########.fr       */
+/*   Updated: 2023/10/21 16:57:21 by koimai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,12 @@ char	*ft_strjoin(char *target, char *buffer)
 	}
 	if (!target || !buffer)
 		return (NULL);
-	str = malloc(((ft_strlen(target) + ft_strlen(buffer)) + 1) * sizeof(char));
+	str = (char *)malloc(((ft_strlen(target) + ft_strlen(buffer)) + 1) * sizeof(char));
 	if (!str)
+	{
+		free(target);
 		return (NULL);
+	}
 	i = -1;
 	if (target)
 		while (target[++i] != '\0')
